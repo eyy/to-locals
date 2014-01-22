@@ -1,0 +1,21 @@
+{
+  "name": "locware",
+  "version": "0.0.1",
+  "description": "transform callback-functions into connect middlewares, dumping their content to res.locals",
+  "main": "lib.js",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/_mocha tests/"
+  },
+  "keywords": [
+    "express",
+    "callbacks",
+    "middlewares",
+    "connect"
+  ],
+  "devDependencies": {
+    "chai": "",
+    "mocha": ""
+  },
+  "author": "eyy",
+  "license": "MIT"
+}
