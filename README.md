@@ -1,16 +1,16 @@
 Locware: `res.locals`-middleware
---------------------------
+================================
 
 Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
 
 
 How
-===
+---
 `npm i locware`
 
 
 What
-====
+----
 
 Most node function are something like this:
 ```js
@@ -56,5 +56,5 @@ var project = locware('project', [ 'req.query.id' ], mongoose.model('projects').
 ```
 
 Tests
-=====
+-----
 Mocha with some `npm test`.
