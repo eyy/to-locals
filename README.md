@@ -1,7 +1,7 @@
 Locware: `res.locals`-middleware
 --------------------------
 
-Transform callback-functions into connect middlewares, dumping their content to `res.locals`.
+Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
 
 
 How
@@ -19,7 +19,7 @@ var getUser = function(cb) {
 };
 ```
 
-Writing your site with express, you usually call these functions and just put their values in `res.locals`:
+Writing your site with [express](http://expressjs.com/), you usually call these functions and just put their values in `res.locals`:
 ```js
 app.get('/user', function(req, res) {
     getUser(function(err, user) {
@@ -37,7 +37,7 @@ app.get('/', locware('user', getUser), function(req, res) {
 });
 ```
 
-It's perfect for mongoose:
+It's perfect for [mongoose](http://mongoosejs.com/):
 ```js
 var users = locware('users', mongoose.model('users').find);
 app.get('users', users [...]);
