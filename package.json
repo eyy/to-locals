@@ -1,6 +1,6 @@
 {
   "name": "locware",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "transform callback-functions into connect middlewares, dumping their content to res.locals",
   "main": "lib.js",
   "scripts": {
