@@ -16,6 +16,7 @@
     "chai": "",
     "mocha": ""
   },
+  "repository": "https://github.com/eyy/locware",
   "author": "eyy",
   "license": "MIT"
 }

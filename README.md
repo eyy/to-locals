@@ -54,3 +54,7 @@ Or use `locware` arguments sugar:
 ```js
 var project = locware('project', [ 'req.query.id' ], mongoose.model('projects').findById);
 ```
+
+Tests
+=====
+Mocha with some `npm test`.
