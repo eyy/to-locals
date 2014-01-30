@@ -1,14 +1,12 @@
 'use strict';
-var expect = require('chai').expect;
+var expect = require('chai').expect,
+    locware = require('../lib');
 
 describe('tests', function () {
-    before(function () {
-        this.locware = require('./../lib');
-    });
 
     it('simple', function(done) {
         var res = { locals: {} };
-        var middleware = this.locware('simple', function(cb) {
+        var middleware = locware('simple', function(cb) {
             cb(null, 1);
         });
 
@@ -20,7 +18,7 @@ describe('tests', function () {
 
     it('with params', function(done) {
         var res = { locals: {} };
-        var middleware = this.locware('plus2', [ 'req.x' ], function(x, cb) {
+        var middleware = locware('plus2', [ 'req.x' ], function(x, cb) {
             cb(null, x + 2);
         });
 
@@ -32,12 +30,29 @@ describe('tests', function () {
 
     it('with function', function(done) {
         var res = { locals: {} };
-        var middleware = this.locware('val', function(cb) {
+        var middleware = locware('val', function(cb) {
             cb(null, this.req.x);
         });
 
         middleware({ x: 3 }, res, function(err) {
             expect(res.locals.val).equals(3);
+            done();
+        });
+    });
+
+    it('preserve context', function(done) {
+        var res = { locals: {} },
+            User = function(name) {
+                this.name = name;
+                this.getName = function(cb) {
+                    cb(null, this.name);
+                };
+            },
+            user = new User('me'),
+            middleware = locware('name', 'getName', user);
+
+        middleware({ msg: 'hi' }, res, function(err) {
+            expect(res.locals.name).equals(user.name);
             done();
         });
     });

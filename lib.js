@@ -9,11 +9,17 @@ module.exports = function locware(key, params, fn) {
 
     return function (req, res, next) {
         var args = [],
-            ctx = { req: req, res: res, next: next };
+            cb = function (err, result) {
+                res.locals[key] = result;
+                next(err);
+            };
+
+        cb.req = req;
+        cb.res = res;
 
         if (params.length)
             params.forEach(function (p) {
-                var val = ctx;
+                var val = cb;
                 p.some(function(key) {
                     val = val[key];
                     return val == null;
@@ -21,11 +27,8 @@ module.exports = function locware(key, params, fn) {
                 args.push(val);
             });
 
-        args.push(function (err, result) {
-            res.locals[key] = result;
-            next(err);
-        });
+        args.push(cb);
 
-        fn.apply(ctx, args);
+        fn.apply(args);
     }
 };
