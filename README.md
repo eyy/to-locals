@@ -1,4 +1,4 @@
-Locware: `res.locals`-middleware
+to-locals: `res.locals`-middleware
 ================================
 
 Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
@@ -6,7 +6,18 @@ Transform callback-functions into [connect](http://www.senchalabs.org/connect/) 
 
 How
 ---
-`npm i locware`
+`npm i to-locals`
+```js
+var toLocals = require('to-locals');
+
+// toLocals([ctx], fn, [params], key)
+
+toLocals(getUsers, 'users');
+toLocals(getUserById, [ 'req.params.id' ], 'user');
+toLocals(users, users.find, 'user');
+toLocals(users, 'find', 'users');
+toLocals(users, 'findById', [ 'req.params.id' ], 'user');
+```
 
 
 What
@@ -30,31 +41,36 @@ app.get('/user', function(req, res) {
 });
 ```
 
-With `locware`, it's a bit simpler:
+With `to-locals`, it's a bit simpler:
 ```js
-app.get('/', locware('user', getUser), function(req, res) {
+app.get('/', toLocals(getUser, 'user'), function(req, res) {
     res.render('index');
 });
 ```
 
 It's perfect for [mongoose](http://mongoosejs.com/):
 ```js
-var users = locware('users', mongoose.model('users').find);
+var users = toLocals(mongoose.model('users'), 'find', 'users');
 app.get('users', users [...]);
 ```
 
-For more complicate cases you can `locware` around an anonymous function:
+For more complicate cases you can `to-locals` around an anonymous function:
 ```js
-var project = locware('project', function (cb) {
-    mongoose.model('projects').findById(this.req.query.id, cb);
-});
+var project = toLocals(function (cb) {
+    mongoose.model('projects').findById(cb.req.query.id, cb);
+}, 'project');
 ```
+Notice how `req` (and `res`) was attached to the callback!
 
-Or use `locware` arguments sugar:
+Or use `toLocals` arguments sugar:
 ```js
-var project = locware('project', [ 'req.query.id' ], mongoose.model('projects').findById);
+var project = toLocals(mongoose.model('projects')), 'findById', [ 'req.query.id' ], 'project');
 ```
 
 Tests
 -----
 Mocha with some `npm test`.
+
+Licence
+-------
+MIT

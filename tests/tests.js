@@ -1,26 +1,29 @@
 'use strict';
 var expect = require('chai').expect,
-    locware = require('../lib');
+    toLocals = require('../lib');
 
 describe('tests', function () {
 
     it('simple', function(done) {
-        var res = { locals: {} };
-        var middleware = locware('simple', function(cb) {
-            cb(null, 1);
-        });
+        var res = { locals: {} },
+            fn = function(cb) {
+                cb(null, 1)
+            },
+            middleware = toLocals(fn, 'simple');
 
-        middleware({}, res, function(err) {
-            expect(res.locals.simple).equal(1);
+        middleware({}, res, function (err) {
+            expect(err).eq(null);
+            expect(res.locals.simple).eq(1);
             done();
         });
     });
 
     it('with params', function(done) {
-        var res = { locals: {} };
-        var middleware = locware('plus2', [ 'req.x' ], function(x, cb) {
-            cb(null, x + 2);
-        });
+        var res = { locals: {} },
+            fn = function(x, cb) {
+                cb(null, x + 2);
+            },
+            middleware = toLocals(fn, [ 'req.x' ], 'plus2');
 
         middleware({ x: 2 }, res, function(err) {
             expect(res.locals.plus2).equal(4);
@@ -29,10 +32,11 @@ describe('tests', function () {
     });
 
     it('with function', function(done) {
-        var res = { locals: {} };
-        var middleware = locware('val', function(cb) {
-            cb(null, this.req.x);
-        });
+        var res = { locals: {} },
+            fn = function(cb) {
+                cb(null, cb.req.x);
+            },
+            middleware = toLocals(fn, 'val');
 
         middleware({ x: 3 }, res, function(err) {
             expect(res.locals.val).equals(3);
@@ -49,7 +53,7 @@ describe('tests', function () {
                 };
             },
             user = new User('me'),
-            middleware = locware('name', 'getName', user);
+            middleware = toLocals(user, 'getName', 'name');
 
         middleware({ msg: 'hi' }, res, function(err) {
             expect(res.locals.name).equals(user.name);

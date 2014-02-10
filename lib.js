@@ -1,6 +1,12 @@
-module.exports = function locware(key, params, fn) {
-    if ('function' == typeof params)
-        fn = params, params = [];
+module.exports = function toLocals(ctx, fn, params, key) {
+    if ('function' == typeof ctx || 'string' == typeof ctx)
+        key = params, params = fn, fn = ctx;
+
+    else if ('function' != typeof fn)
+        fn = ctx[fn];
+
+    if (!Array.isArray(params))
+        key = params, params = [];
 
     else if (params.length)
         params = params.map(function(p) {
@@ -9,13 +15,12 @@ module.exports = function locware(key, params, fn) {
 
     return function (req, res, next) {
         var args = [],
-            cb = function (err, result) {
+            cb = function toLocalsCallback(err, result) {
                 res.locals[key] = result;
                 next(err);
             };
 
-        cb.req = req;
-        cb.res = res;
+        cb.req = req, cb.res = res;
 
         if (params.length)
             params.forEach(function (p) {
@@ -29,6 +34,6 @@ module.exports = function locware(key, params, fn) {
 
         args.push(cb);
 
-        fn.apply(args);
+        fn.apply(ctx, args);
     }
 };

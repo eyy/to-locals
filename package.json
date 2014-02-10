@@ -1,10 +1,10 @@
 {
-  "name": "locware",
+  "name": "to-locals",
   "version": "0.1.0",
   "description": "transform callback-functions into connect middlewares, dumping their content to res.locals",
   "main": "lib.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/_mocha tests/"
+    "test": "node ./node_modules/mocha/bin/_mocha tests.js"
   },
   "keywords": [
     "express",
@@ -16,7 +16,7 @@
     "chai": "",
     "mocha": ""
   },
-  "repository": "https://github.com/eyy/locware",
+  "repository": "https://github.com/eyy/to-locals",
   "author": "eyy",
   "license": "MIT"
 }
