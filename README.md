@@ -10,7 +10,7 @@ How
 ```js
 var toLocals = require('to-locals');
 
-// toLocals([ctx], fn, [params], key)
+// toLocals([context], function, [arguments], key)
 
 toLocals(getUsers, 'users');
 toLocals(getUserById, [ 'req.params.id' ], 'user');
@@ -51,7 +51,7 @@ app.get('/', toLocals(getUser, 'user'), function(req, res) {
 It's perfect for [mongoose](http://mongoosejs.com/):
 ```js
 var users = toLocals(mongoose.model('users'), 'find', 'users');
-app.get('users', users [...]);
+app.get('users', users, [...]);
 ```
 
 For more complicate cases you can `to-locals` around an anonymous function:
@@ -62,9 +62,9 @@ var project = toLocals(function (cb) {
 ```
 Notice how `req` (and `res`) was attached to the callback!
 
-Or use `toLocals` arguments sugar:
+Or use `to-locals`'s sugar:
 ```js
-var project = toLocals(mongoose.model('projects')), 'findById', [ 'req.query.id' ], 'project');
+var project = toLocals(mongoose.model('projects'), 'findById', [ 'req.query.id' ], 'project');
 ```
 
 Tests
