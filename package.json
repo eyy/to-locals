@@ -1,10 +1,10 @@
 {
   "name": "to-locals",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "transform callback-functions into connect middlewares, dumping their content to res.locals",
   "main": "lib.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/_mocha tests.js"
+    "test": "node ./node_modules/mocha/bin/_mocha tests/"
   },
   "keywords": [
     "express",
