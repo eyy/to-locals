@@ -1,7 +1,7 @@
 to-locals: `res.locals`-middleware
 ================================
 
-Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
+> Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
 
 
 How
