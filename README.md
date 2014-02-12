@@ -1,9 +1,9 @@
 to-locals: `res.locals`-middleware
-================================
+==================================
 
 > Transform callback-functions into [connect](http://www.senchalabs.org/connect/) middlewares, dumping their content to `res.locals`.
 
-
+![wow so gif](https://raw.github.com/eyy/to-locals/master/callback.gif)
 How
 ---
 `npm i to-locals`
